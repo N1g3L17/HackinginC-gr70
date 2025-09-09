@@ -1,0 +1,11 @@
+mkdir hic-s1174542-s?
+
+cd hic-s1174542-s?
+mkdir exercise1
+mkdir exercise2
+mkdir exercise3
+
+echo ¨1. Nigel Nagel | s1174542¨ >> names.txt
+echo ¨1. ? | ? >> names.txt
+
+du -sh .
