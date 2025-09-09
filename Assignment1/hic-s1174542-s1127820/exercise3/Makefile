@@ -8,7 +8,10 @@ run:
 	./urandom_loop_bytes >> urandom-byte-output.txt
 
 runex3h:
-	for i in {1..10}; do ./urandom_loop_uint16 | wc -l >> urandom-uint16-output.txt; done
+	make compileex3f
+	echo "for i in {1..10}; do ./urandom_loop_uint16 | wc -l >> urandom-uint16-output.txt; done" >> runex3h.sh
+	chmod +x runex3h.sh
+	./runex3h.sh
 
 clean:
 	rm urandom_loop_bytes urandom-byte-output.txt urandom_loop_uint16 urandom-uint16-output.txt
