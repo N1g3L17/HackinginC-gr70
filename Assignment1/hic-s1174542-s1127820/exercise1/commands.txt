@@ -8,4 +8,4 @@ mkdir exercise3
 echo ¨1. Nigel Nagel | s1174542¨ >> names.txt¨
 echo ¨2. David Scholten | s1127820¨ >> names.txt
 
-du -sh .
+du -sh names.txt

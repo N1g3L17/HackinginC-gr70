@@ -1,0 +1,3 @@
+du -sh names.txt
+
+The file names.txt is 4.0KB in size. 
