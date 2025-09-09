@@ -2,7 +2,8 @@
 
 letters=()
 
-while [ ${#letters[@]} -eq 100 ]
+
+while [ ${#letters[@]} -lt 100 ]
 do
     number=$(($RANDOM%4))
     case $number in
@@ -12,5 +13,4 @@ do
         3) letters+=("T") ;;
     esac
 done
-
-echo ${letters[@]} >> test.txt
+echo ${letters[@]} | tr -d ' ' >> test.txt
