@@ -9,6 +9,7 @@ run:
 
 runex3h: $(eval SHELL:=/bin/bash)
 	make compileex3f
+	rm -f urandom-uint16-output.txt 
 	echo "for i in {1..10}; do ./urandom_loop_uint16 | wc -l >> urandom-uint16-output.txt; done" >> runex3h.sh
 	chmod +x runex3h.sh
 	./runex3h.sh
