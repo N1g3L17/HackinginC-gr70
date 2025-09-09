@@ -1,0 +1,3 @@
+grep -o 'GATTACA' genome.txt | wc -l
+
+Answer: 3
