@@ -1,16 +1,19 @@
 #!/bin/bash
 
-letters=()
+rm gengenome.txt
 
-
-while [ ${#letters[@]} -lt 100 ]
+for i in {1..500}
 do
-    number=$(($RANDOM%4))
-    case $number in
-        0) letters+=("A") ;;
-        1) letters+=("C") ;;
-        2) letters+=("G") ;;
-        3) letters+=("T") ;;
-    esac
+    line=""
+    for j in {1..100}
+    do
+        case $((RANDOM % 4)) in
+            0) letter="A" ;;
+            1) letter="C" ;;
+            2) letter="G" ;;
+            3) letter="T" ;;
+        esac
+        line+="$letter"
+    done
+    echo "$line" >> gengenome.txt
 done
-echo ${letters[@]} | tr -d ' ' >> test.txt
