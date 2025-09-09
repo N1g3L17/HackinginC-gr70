@@ -55,3 +55,5 @@ int main(int argc, char *argv[])
     }
     return 1;
 }
+
+// Coding style might not be perfect, but it works.
