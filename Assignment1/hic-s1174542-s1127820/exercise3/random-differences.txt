@@ -1,0 +1,7 @@
+Answer to question 3a:
+
+The difference between the /dev/random and the /dev/urandom devices is in how ´random´ they are.
+The /dev/random makes use of the so called entropy pool, where the random may not be available at the moment. 
+The /dev/urandom doesn't make use of a entropy pool and returns as many bytes as the user requested. That´s why it´s faster then /dev/random, but less accurate in
+generating random numbers. 
+
