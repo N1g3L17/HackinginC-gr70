@@ -1,6 +1,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include "urandom_reading.h"
 
 int main() {
     FILE* fp = fopen("/dev/urandom", "r");
@@ -11,7 +12,12 @@ int main() {
 
     int ch;
     while (1) {
-        ch = fgetc(fp);
+        ch = read_byte(fp);
+        if (ch == -1) {
+            perror("read_byte");
+            fclose(fp);
+            return 1;
+        }
         printf("%d %u %x\n", (signed char)ch, (unsigned char)ch, (unsigned char)ch);
         if ((unsigned char)ch == 42)
             break;

@@ -3,6 +3,7 @@
 # include <unistd.h>
 # include <stdint.h>
 # include <inttypes.h>
+# include "urandom_reading.h"
 
 int main() {
     FILE* fp = fopen("/dev/urandom", "r");
@@ -13,7 +14,12 @@ int main() {
 
     uint16_t ch;
     while (1) {
-        ch = fgetc(fp);
+        ch = read_uint16(fp);
+        if (ch == -1) {
+            perror("read_uint16");
+            fclose(fp);
+            return 1;
+        }
         printf("%04x\n", ch);
         if ((unsigned char)ch == 42)
             break;
