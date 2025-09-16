@@ -1,0 +1,20 @@
+1d: A short contains 2 bytes. f is an array which contains 3 shorts, hence it is calculated that the size of f = 2 * 3 = 6 bytes.
+
+1e/f: ./exercise1 | sort > exercise1.txt (added column names manually)
+address		 variable	value	sizeof	next_addr
+0x7ffe46e5e29f		c	    3	    1	0x7ffe46e5e2a0
+0x7ffe46e5e2a0		d	    4	    1	0x7ffe46e5e2a1
+0x7ffe46e5e2a1		i	    9	    1	0x7ffe46e5e2a2
+0x7ffe46e5e2a2		b	    2	    2	0x7ffe46e5e2a4
+0x7ffe46e5e2a4		a	    1	    4	0x7ffe46e5e2a8
+0x7ffe46e5e2a8		e	    5	    8	0x7ffe46e5e2b0
+0x7ffe46e5e2b0		g	    7	    8	0x7ffe46e5e2b8
+0x7ffe46e5e2b8		h	    8	    8	0x7ffe46e5e2c0
+0x7ffe46e5e2c6		f	    6 6 6	6	0x7ffe46e5e2cc
+0x7ffe46e5e2cd		j	    Ten. Or A?	11	0x7ffe46e5e2d8
+
+1g: The compiler optimizes the addresses so they align well. For example, a type that is only 1 or 2 byte can easily fit into gaps,
+but types with 8 bytes have to be assigned to 8 byte (64 bit) boundaries.
+
+1h: As said in 1g, types of 8 bytes have to be placed into 8 byte boundaries. So if we are on the 5th byte of one boundary and want to assign an address
+to a variable with an 8 byte type, we have to skip the rest to assign this. This leaves gaps (which can later be filled by the smaller types).
