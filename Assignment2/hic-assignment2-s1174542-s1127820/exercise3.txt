@@ -1,0 +1,43 @@
+Explaination on exercise3:
+# short i:
+Variable i is 2 bytes in size, and that´s also visible in the output of exercise3. 
+i = 0x1234 --> the 0x34 can be found on address 0x7ffd0fa6c65e and 0x12 on 0x7ffd0fa6c65f. 
+For all of these variables, you can see that it´s put in memory in little-endian form. The least significant byte is first.
+
+# char x:
+Variable x is 1 byte in size, so it takes up one address: 0x7ffd0fa6c65d.
+
+# long sn1
+The long data type is 8 bytes in size, but the variable sn1 only takes up 3 bytes. So this variable is not really memory efficient.
+This can also been seen form the output file, where 5 addresses take up the 0x00 hexadecimal value.
+This variable is store in address: 0x7ffd0fa6c660 until 0x7ffd0fa6c667
+
+# char sn2[]
+This string sn2[] is 8 characters long, but takes up 9 bytes. Why? Because at the end of every string there is a '\0' that determinate where the string ends. 
+The '\0' is also visible in the output file at address: 0x7ffd0fa6c67f. 
+Further you can see at each address of the string, which character it contains. This can been done with some help of the ASCII:
+0x7ffd0fa6c677  0x53            83  'S'
+0x7ffd0fa6c678  0x31            49  '1'
+0x7ffd0fa6c679  0x31            49  '1'
+0x7ffd0fa6c67a  0x32            50  '2'
+0x7ffd0fa6c67b  0x37            55  '7'
+0x7ffd0fa6c67c  0x38            56  '8'
+0x7ffd0fa6c67d  0x32            50  '2'
+0x7ffd0fa6c67e  0x30            48  '0'
+0x7ffd0fa6c67f  0x00            0   '\0'        
+
+# int y[2]
+y[2] is a array of type integer, with a length of 2. So this array takes up 2*2 = 4 bytes in size.
+I think most people will get a bit confused over this piece of output.
+Some people will think that the last value of the array "0x44332211" has been put into memory first, but this isn't the case.
+It is again in little-endian form, and the least significant byte has been stored first. And so on...
+So the first value of the array "0x11223344" has been put into memory first, but in little-endian form.
+
+0x7ffd0fa6c668  0x44
+0x7ffd0fa6c669  0x33
+0x7ffd0fa6c66a  0x22
+0x7ffd0fa6c66b  0x11
+0x7ffd0fa6c66c  0x11
+0x7ffd0fa6c66d  0x22
+0x7ffd0fa6c66e  0x33
+0x7ffd0fa6c66f  0x44

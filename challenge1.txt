@@ -1,1 +1,0 @@
-for i in {1...10}; do echo 'test'; done | netcat -v -q 1 hackme.qwfp.nl 38920
