@@ -1,0 +1,33 @@
+# Explaination on exercise 1
+
+## printf("%p\n", (void*) x); 
+// This printf statements prints the pointer of x. X is a int32_t array, so x here is pointing to the address of x[0]. It will return the address of x[0].
+
+## printf("%p\n", (void*) &x); 
+Prints the same as above, the address of x, the address of x[0].
+
+## printf("%p\n", (void*) (x+1)); 
+Prints the address of x+1. x+1 means the address of x plus 1, so the next address which is x[1]. It will print the address of x[1].
+
+## printf("%p\n", (void*) (&x+1)); 
+Prints the address of &x+1. Works the same as above.
+After all, it doesn´t behave the same. After some research I found that when you &x + 1, you will go to the next array.
+Because x has the size of 4 and is of type int32_t, then &x + 1 means jump to next address 16 (4 * sizeof(int32_t)) bytes beyond. 
+
+##printf("%" PRId32 "\n", *x); 
+Prints the deference value of x, which is basicly x[0]. The result will be 23.
+
+##printf("%" PRId32 "\n", *x+x[2]); 
+What I think is going to happen is it deference x and adds x[2], so 23 + 5 = 28. 
+
+##printf("%" PRId32 "\n", *x+*(x+3)); 
+What I think is going to happen is it will first add 3 to x, so it will reference to the address of x[3]. Next up is deference x+3, which is 128 and add deference x, which is 23. So this will be 23 + 128 = 151. 
+
+## Results
+0x7ffe0c8f8a50
+0x7ffe0c8f8a50
+0x7ffe0c8f8a54
+0x7ffe0c8f8a60 //Here you see the 16 bytes jump it took because of &x + 1.
+23
+28
+151
