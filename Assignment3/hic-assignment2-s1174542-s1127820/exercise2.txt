@@ -1,0 +1,16 @@
+# 2b
+the first argument of strcpy says it all. It uses a restrict. 
+strcpy(s1, "s1174542"); Here is my restrict the size of s1.
+s1 got it´s size form malloc: char* s1 = malloc(9);.
+This will result in a writing limit to s1 of 9 characters. 
+When assigning directly to *s1, it is possible that I overwrite this limit of 9. So that is why strcpy is safer.
+
+# 2c
+I need to allocate a length of 9 for a string of 8 characters, because of the "\0" terminator at the end of the string.
+
+# 2d
+When it´s reacing the end of the string, there will be a "\0" at the end of the string. This is a sign that the string ends here, so it´ll stop there.
+
+# 2f
+If I free the memory of s1 and s2, nothing will impact my heap_attack function. The only thing is, that it will impact the printf statements after the free function.
+Now I cannot print my desired output.
