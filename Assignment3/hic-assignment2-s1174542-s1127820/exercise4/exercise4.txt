@@ -1,0 +1,11 @@
+4b) No, on the system we ran it on it came out the same every time,
+but on other systems it might be different. It depends on things like RAM, 
+other applications that are running at the same time
+and how the operating system handles malloc (with or without overcommit).
+
+4c) In the experiment we got the same value when using calloc as I did when using malloc.
+For initialization with zeroes, calloc is a better option as it prevents overflow and uses much less memory.
+malloc is better when you want to immediately overwrite data with your own data as it is a bit faster due to skipping the zero step.
+
+4d) It might write to a NULL pointer, which might crash the program, cause a segmentatio fault and/or lead to other undefined behaviour.
+
