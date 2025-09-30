@@ -1,1 +1,13 @@
+## Used input to invoce a shell.
 ./buffer $(spamf "AA" 51; spamf "/bin/sh" 1)
+
+## Explaination
+Actually, I found the solution to this assignment quite quickly. 
+When I looked at the code, I saw that ‘buffer’ was an array of 100 characters and 
+that it was located on the stack together with ‘command’. The goal of this assignment 
+is to overwrite the contents of ‘command’, which is located on the stack, via the ‘buffer’ 
+array and cause it to overflow. First, I tried to overflow the buffer with lots of A's until 
+I saw the A's in the command piece. Then I specified ‘/bin/sh’ as the end buffer and adjusted 
+the number of A's so that the ‘command’ array was completely overwritten with ‘/bin/sh’. 
+
+Voila! An interactive shell.
