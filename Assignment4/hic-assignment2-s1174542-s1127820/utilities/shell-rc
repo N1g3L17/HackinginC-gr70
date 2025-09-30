@@ -1,0 +1,49 @@
+# Hacking in C supporting functions
+
+# Aliases don't expand in bash unless shopt expand_aliases is set;
+# use functions instead.
+#
+# Alias that reverses the order of bytes on stdin
+#alias revbytes='python3 -c "import sys;sys.stdout.buffer.write(sys.stdin.buffer.read()[::-1])"'
+# Alias that parses a memory dump back into bytes and then hexdumps
+# them for easier viewing.
+#alias rexxd='xxd -r -p | xxd'
+
+# Function that reverses the order of bytes on stdin
+revbytes () {
+	python3 -c "import sys;sys.stdout.buffer.write(sys.stdin.buffer.read()[::-1])"
+}
+
+# Function that parses a hexadecimal memory dump or argument back
+# into bytes and then hexdumps them for easier viewing.
+rexxd () {
+	if [ "$#" -gt 0 ]
+	then
+		printf %s "$@" | xxd -r -p | xxd
+	else
+		xxd -r -p | xxd
+	fi
+}
+
+# Function that parses a hexadecimal input or argument into bytes
+# and then outputs those bytes in reverse order.
+revaddr () {
+	if [ "$#" -gt 0 ]
+	then
+		printf %s "$@" | xxd -r -p | revbytes
+	else
+		xxd -r -p | revbytes
+	fi
+}
+
+# Function that repeats its first argument string N times
+# (N being its second argument).
+spamf () {
+	if [ "$#" -ne 2 ]
+	then
+		printf "Usage: spamf <formatstring> <count>\n" 1>&2
+	else
+		python3 -c "print(\"${1}\"*${2}, end=\"\")"
+	fi
+}
+
