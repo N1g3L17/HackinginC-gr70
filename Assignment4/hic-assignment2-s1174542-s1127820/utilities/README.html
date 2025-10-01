@@ -1,0 +1,107 @@
+<h1 id="utilities-for-hacking">Utilities for hacking</h1>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>Make sure <code>xxd</code> and <code>python</code> are installed on
+this system, the shell functions rely on them.</p>
+<h2 id="functionality-provided">Functionality provided</h2>
+<h3 id="shell-functions">Shell functions:</h3>
+<p><code>shell-rc</code> contains a few shell functions performing basic
+functionality. These are usable anywhere where your input is first being
+processed by the shell. However, that excludes the interface of
+<code>gdb</code> and whenever you are directly typing into a
+program.</p>
+<ul>
+<li><code>spamf</code> outputs its first argument a specified number of
+times.</li>
+<li><code>revaddr</code> turns its ASCII hexadecimal argument (or
+<code>stdin</code>) into bytes <em>and</em> reverses the order of those
+bytes.
+<ul>
+<li><code>revaddr</code> differs from <code>reverseaddr.c</code> (see
+below) in that it also outputs any <em>leading</em> NULL-bytes you give
+it.</li>
+</ul></li>
+<li><code>rexxd</code> turns its ASCII hexadecimal argument (or
+<code>stdin</code>) back into bytes <em>and</em> hexdumps them in
+standard hexdump format, for ease of reading.</li>
+<li><code>revbytes</code> simply reverses the order of bytes on
+<code>stdin</code>.</li>
+</ul>
+<h3 id="shell-scripts">Shell scripts:</h3>
+<p><code>attack.sh</code> and <code>exploit-loop.sh</code> give some
+ideas on how to use shell scripting to make your life easier.
+<code>exploit-loop.sh</code> in particular may be useful in assignment
+5.</p>
+<p>Using shell functions in shell scripts requires explicitly “sourcing”
+the file containing their definitions, because <code>.bashrc</code> and
+<code>.zshrc</code> are not used by shell scripts.</p>
+<h3 id="c-programs">C programs:</h3>
+<p>Some C programs:</p>
+<ul>
+<li><code>shellcode.c</code> compiles to <code>shellcode</code>, a
+program that outputs a working shellcode of 35 bytes (see lecture &amp;
+assignment 5).</li>
+<li><code>reverseaddr.c</code> compiles to <code>reverseaddr</code>.
+This command reverses an address supplied as first argument, like the
+<code>revaddr</code> shell function.
+<ul>
+<li><code>reverseaddr</code> is a lot less forgiving about its input
+than the <code>revaddr</code> shell function. In particular, it
+<em>requires</em> the <code>0x</code> prefix and it will <em>not</em>
+output any leading NULL-bytes.</li>
+<li>You should only use this where shell functions like
+<code>revaddr</code> are not available but you <em>can</em> execute
+programs.</li>
+</ul></li>
+<li><code>getenvaddr.c</code> compiles into two executables, neither of
+which is really required for the rest of the course but may come in
+handy if using an environment variable to input data into the program:
+<ul>
+<li><code>getenvaddr</code> gets the address of an environment variable
+in the context of an executable and shows it on
+<code>stderr</code>.</li>
+<li><code>getenvaddr-bytes</code> does the same, but also prints the
+address <em>as bytes</em> in little-endian order on <code>stdout</code>,
+so can be piped to input without needing to pass through
+<code>reverseaddr</code>.</li>
+</ul></li>
+</ul>
+<h2 id="compiling">Compiling</h2>
+<p>Only required for the C programs:</p>
+<pre><code>make</code></pre>
+<h2 id="installing">Installing</h2>
+<h3 id="shell-functions-1">Shell functions</h3>
+<p>The shell functions from <code>shell-rc</code> must either be copied
+manually into <code>~/.zshrc</code> or <code>~/.bashrc</code> (or the
+rc-file for whatever shell you’re using), or be “sourced” from that
+file. Note they will only be available on <em>new</em> shells after this
+inclusion.</p>
+<p>One way of doing the copy is <em>appending</em> as follows (NOTE THE
+DOUBLE <code>&gt;&gt;</code>; with a single <code>&gt;</code> you will
+overwrite rather than append):</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> shell-rc <span class="op">&gt;&gt;</span> ~/.bashrc</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> shell-rc <span class="op">&gt;&gt;</span> ~/.zshrc</span></code></pre></div>
+<p>To make <code>~/.bashrc</code> or <code>~/.zshrc</code> source the
+file, execute (from the directory where <code>shell-rc</code> is
+stored):</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> . <span class="dt">\&quot;</span><span class="va">$(</span><span class="bu">pwd</span><span class="va">)</span>/shell-rc\&quot; <span class="op">&gt;&gt;</span> ~/.bashrc</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> . <span class="dt">\&quot;</span><span class="va">$(</span><span class="bu">pwd</span><span class="va">)</span>/shell-rc\&quot; <span class="op">&gt;&gt;</span> ~/.zshrc</span></code></pre></div>
+<p>This will automatically expand the working directory and so hardcode
+the path to the <code>shell-rc</code> file. Note the escaped quotes
+<code>\"</code>; the backslashes are not optional.</p>
+<p>Of course, manually editing these files in a text editor is another
+option.</p>
+<h3 id="c-programs-and-shell-scripts">C programs and shell scripts</h3>
+<p>For the C programs and shell scripts, installing is not strictly
+required. You can always just use an absolute or relative path to the
+binary or script.</p>
+<p>By default <code>make install</code> will install the programs to
+<code>/usr/local</code>, but you may choose to install to somewhere else
+by setting <code>PREFIX</code>:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># will need root</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> install</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># alternatively, for example in /home/user/.local/bin (no root needed, but may</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># not be in $PATH)</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> install PREFIX=/home/user/.local</span></code></pre></div>
