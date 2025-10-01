@@ -1,0 +1,12 @@
+We first used setarch to disable randomization.
+Then by compiling functions.c and running it with a test input, we found in the debug information that the shell address is 0x55555555525d and reversed this
+using revaddr 55555555525d which gave ]RUUUU as output.
+We used gdb on the functions program and set a breakpoint on the check_passphrase function.
+Then we ran it with "hello" as input and at the breakpoint we printed the address of the buffer with (gdb) p &buffer, which was 0x7fffffffdbc0.
+At the breakpoint we also used (gdb) info frame to find that the return address is at 0x7fffffffdc38, which means the offset is 120 bytes.
+Then we ran the program with: ./functions "$(python3 -c 'print("A" * 120 + "]RUUUU")')".
+
+This worked because the buffer overflow in check_passphrase made strcpy copy the long string into the buffer and overflowed on the stack, where we could
+overwrite the return address at 120 bytes after the buffer start. By padding with 120 A's and then giving the reversed shell address, the return address pointed
+to launch_shell, eventually launching the shell when check_passphrase returned without knowing the password.
+
