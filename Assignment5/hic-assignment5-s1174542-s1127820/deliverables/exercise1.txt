@@ -1,0 +1,39 @@
+# A
+
+- Exploite to get /bin/ls:
+( ../../../../Downloads/utilities/shellcode list ; spamf "%p " 87 ; revaddr 7fffffffd970 ) | ./buffer-vuln
+
+- Exploite to get /bin/sh:
+( ../../../../Downloads/utilities/shellcode shell 171 ; spamf "%p " 30 ; revaddr 7fffffffd9d0 ; echo ; cat - ) | ./buffer-vuln
+
+# B 
+- ../../../../Downloads/utilities/shellcode shell 171 ; 
+First I had to use the binary of the shellcode.c program. In here I selected the shell machine code instructions and added 171 NOP-bytes infront.
+The NOP-bytes are for the sake of this exercise, to show you that you don't always need the exact return address.
+- spamf "%p " 30 ; 
+The spamf %p is to print '%p' 30 times and to print the current stack. This is to make use of the format strings vulnerability, and also to add extra bytes to the buffer so it'll overflow and seg fault.
+- revaddr 7fffffffd9d0 ; 
+The revaddr function is to print the binary of the return address and to let the stack pointer know where to return and where are shellcode is located.
+- echo ; 
+Add a new line so the shellcode activates.
+- cat -  
+This is to make sure that the stdout does not close and therefore the shell. This will make sure that the stdin stays open.
+- | ./buffer-vuln
+Pipe the built string into the gets funtions in the C program.
+
+# C 
+First, I started by checking whether the programme was vulnerable to a format string attack. Using the spamf function, I piped a number of “%p” into the function. 
+This showed me a number of addresses, including stack and return addresses. This told me that the programme was vulnerable to a format string attack. 
+Next, I tried to determine the amount at which the buffer array indicated a seg fault. This occurred at 99 times ‘%p ’ (3 bytes, including the space). 
+Then I first searched for the stack address, which most likely holds the return address of the buffer array, which is 0x7fffffffd970. 
+Then I first tried to obtain the /bin/ls. Due to the size of /bin/ls and the return address, I now only had to enter ‘%p ’ 87 times. I quickly obtained the “ls”. 
+This worked immediately with the string described above. 
+
+Then I started working with /bin/sh. By replacing the string from /bin/ls with shell, it actually worked for this one too, but it shut down immediately. 
+This led me to use “cat -” to keep the input/stream open. The only problem is that I now have to press enter before I get the shell. To counter this, 
+I added a simple “echo” statement, which prints the newline “\n” for me. 
+
+To demonstrate how the NOP works, I added a number of NOP bytes. In my opinion, it is best to add as many NOP bytes as possible. 
+This increases your margin of error in finding the return address. I added 171 NOP bytes, which meant I only needed 30x a ‘%p ’. I also chose a return address that 
+was printed that ultimately holds the return address of a NOP. This turned out to be 0x7fffffffd9d0. By using this address in combination with the NOP sled, 
+it now works as well. 

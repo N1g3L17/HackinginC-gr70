@@ -1,0 +1,45 @@
+First frame:
+
+• which frame it is: frame 0
+• which function the frame belongs to: function_b
+• the location (address in memory) of the frame: 0x7fffffffdc40
+• the location of the frame it was called by: 0x7fffffffdc60
+• (if applicable) the location of the frame it called: N/A
+• the value of the instruction pointer (%rip on 64-bit systems): 0x555555555155
+• the location of the return address (saved instruction pointer): 0x7fffffffdc38
+• the value of the return address: 0x5555555551b6
+• the value of the frame pointer register (base pointer, %rbp): 0x7fffffffdc30
+• the location of the saved frame pointer (saved base pointer): 0x7fffffffdc30
+• the value of the saved frame pointer: 0x7fffffffdc50 (x/xg $rbp to get caller $rbp)
+• the value of the stack pointer (%rsp): 0x7fffffffdc20 (info registers rsp)
+• the address of the local variable of that function (try e.g. print/x &beacon): 0x7fffffffdc2c (by print/x buffer)
+
+Second frame:
+• which frame it is: frame 1
+• which function the frame belongs to: function_a
+• the location (address in memory) of the frame: 0x7fffffffdc60
+• the location of the frame it was called by: 0x7fffffffdc70
+• (if applicable) the location of the frame it called: 0x7fffffffdc40
+• the value of the instruction pointer (%rip on 64-bit systems): 0x5555555551b6
+• the location of the return address (saved instruction pointer): 0x7fffffffdc58
+• the value of the return address: 0x5555555551e9
+• the value of the frame pointer register (base pointer, %rbp): 0x7fffffffdc50
+• the location of the saved frame pointer (saved base pointer): 0x7fffffffdc50
+• the value of the saved frame pointer: 0x7fffffffdc60 (x/xg)
+• the value of the stack pointer (%rsp): 0x7fffffffdc40 (info registers rsp)
+• the address of the local variable of that function (try e.g. print/x &beacon): 0x7fffffffdc4c (by print/x &beacon)
+
+Third frame:
+• which frame it is: frame 2
+• which function the frame belongs to: main
+• the location (address in memory) of the frame: 0x7fffffffdc70
+• the location of the frame it was called by: N/A
+• (if applicable) the location of the frame it called: 0x7fffffffdc60
+• the value of the instruction pointer (%rip on 64-bit systems): 0x5555555551e9
+• the location of the return address (saved instruction pointer): 0x7fffffffdc68
+• the value of the return address: 0x7ffff7c2a1ca
+• the value of the frame pointer register (base pointer, %rbp): 0x7fffffffdc60
+• the location of the saved frame pointer (saved base pointer): 0x7fffffffdc60
+• the value of the saved frame pointer: 0x7fffffffdd00 (x/xg)
+• the value of the stack pointer (%rsp): 0x7fffffffdc60 (info registers rsp)
+• the address of the local variable of that function (try e.g. print/x &beacon): N/A

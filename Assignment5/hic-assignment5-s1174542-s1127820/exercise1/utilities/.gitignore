@@ -1,0 +1,5 @@
+getenvaddr
+getenvaddr-bytes
+reverseaddr
+shellcode
+*.o

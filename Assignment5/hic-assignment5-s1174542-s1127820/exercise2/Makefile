@@ -1,4 +1,4 @@
-BINARIES = buffer-vuln controlflow controlflowmanipulate controlflowcrash
+BINARIES = buffer-vuln controlflow
 
 CFLAGS = -fno-omit-frame-pointer -g
 
@@ -10,12 +10,6 @@ buffer-vuln: buffer-vuln.c
 
 controlflow: CFLAGS += -fno-stack-protector
 controlflow: controlflow.c
-
-controlflowmanipulate: CFLAGS += -fno-stack-protector
-controlflowmanipulate: controlflowmanipulate.c
-
-controlflowcrash: CFLAGS += -fno-stack-protector
-controlflowcrash: controlflowcrash.c
 
 .PHONY: distclean
 distclean:
